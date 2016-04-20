@@ -46,7 +46,7 @@ public class FormMusic extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TextfielSearch = new javax.swing.JTextField();
+        Text = new javax.swing.JTextField();
         SubmitSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -58,9 +58,9 @@ public class FormMusic extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TextfielSearch.addActionListener(new java.awt.event.ActionListener() {
+        Text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextfielSearchActionPerformed(evt);
+                TextActionPerformed(evt);
             }
         });
 
@@ -99,9 +99,9 @@ public class FormMusic extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(TextfielSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Text, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(SubmitSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(SubmitSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -118,7 +118,7 @@ public class FormMusic extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SubmitSearch)
-                    .addComponent(TextfielSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -133,9 +133,9 @@ public class FormMusic extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextfielSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextfielSearchActionPerformed
+    private void TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextfielSearchActionPerformed
+    }//GEN-LAST:event_TextActionPerformed
 
     private void SubmitSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSearchActionPerformed
         // TODO add your handling code here:
@@ -143,7 +143,7 @@ public class FormMusic extends javax.swing.JFrame {
         jList1.setVisible(true);
         validate();
         repaint();
-        String textSearch = TextfielSearch.getText();
+        String textSearch = Text.getText();
         HttpURLConnectionExample http = new HttpURLConnectionExample();
         String jsonui = null;
         try {
@@ -153,6 +153,7 @@ public class FormMusic extends javax.swing.JFrame {
         }
         JSONParser parser = new JSONParser();
         try{
+            System.out.println(jsonui);
            Object obj = parser.parse(jsonui);
            JSONArray array = (JSONArray)obj;
            int larray = array.size();
@@ -167,29 +168,11 @@ public class FormMusic extends javax.swing.JFrame {
               listURL.add(obj2.get("UrlJunDownload").toString());
               listName.add(obj2.get("Title").toString()+" - "+obj2.get("Artist").toString());
            }
-
-         
-         
-         
-         
-         
-         
-//         System.out.println(obj);
       }catch(ParseException pe){
 		
          System.out.println("position: " + pe.getPosition());
          System.out.println(pe);
       }
-        
-        //list
-        //        jList1 = new javax.swing.JList<>();
-        //        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            //            String[] strings = { "List1", "List2", "List3", "List4", "List5" };
-            //            public int getSize() { return strings.length; }
-            //            public String getElementAt(int i) { return strings[i]; }
-            //        });
-    //        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-    //        jScrollPane1.setViewportView(jList1);
     }//GEN-LAST:event_SubmitSearchActionPerformed
 
     public static Thread queryThread;
@@ -223,10 +206,15 @@ public class FormMusic extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String bai = listURL.get(0);
-        playsearch.phatsong(bai).stop();
-        queryThread.stop();
-        
+        String bai = null;
+            if (queryThread != null && queryThread.isAlive()) queryThread.stop();
+            
+            queryThread = new Thread() {
+                public void run() {
+                    playsearch.phatsong(bai).close();
+                }
+            };
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -267,7 +255,7 @@ public class FormMusic extends javax.swing.JFrame {
     private ArrayList<String> listName;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SubmitSearch;
-    private javax.swing.JTextField TextfielSearch;
+    private javax.swing.JTextField Text;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

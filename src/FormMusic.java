@@ -164,9 +164,9 @@ public class FormMusic extends javax.swing.JFrame {
 
            for(int i = 0 ; i < larray ; i++){
               JSONObject obj2 = (JSONObject)array.get(i);
-              listModel.addElement(obj2.get("Title")+" - "+obj2.get("Artist")); 
-              listURL.add(obj2.get("UrlJunDownload").toString());
-              listName.add(obj2.get("Title").toString()+" - "+obj2.get("Artist").toString());
+              listModel.addElement(obj2.get("TenSong")+" - "+obj2.get("CaSi")); 
+              listURL.add(obj2.get("LinkSong").toString());
+              listName.add(obj2.get("TenSong").toString()+" - "+obj2.get("CaSi").toString());
            }
       }catch(ParseException pe){
 		

@@ -25,7 +25,7 @@ public class HttpURLConnectionExample {
 //		HttpURLConnectionExample http = new HttpURLConnectionExample();
 //
 //		System.out.println("Testing 1 - Send Http GET request");
-//		http.sendGet();
+//		http.sendGet("a");
 //
 //	}
 
@@ -58,7 +58,9 @@ public class HttpURLConnectionExample {
 		in.close();
                 String json = response.toString();
 		//print result
+//                                System.out.println(json);
 		return json;
+
 
 	}
 
